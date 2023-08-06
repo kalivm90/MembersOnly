@@ -1,0 +1,54 @@
+* {
+  box-sizing: border-box;
+}
+body {
+  background-color: #f4f4f4;
+}
+
+.navbar-nav a.nav-link.active {
+  color: #0d6efd;
+}
+
+.nav-img {
+  width: 40px;
+}
+.content {
+  height: 200px;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: translateY(-20%);
+  }
+}
+
+
+/* ERROR BANNER */
+.alert {
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.fade-in {
+  opacity: 1;
+}
+
+.fade-out {
+  opacity: 0;
+}
+

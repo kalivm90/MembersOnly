@@ -1,0 +1,56 @@
+extends ../layout 
+
+//- PUT JS IN /PUBLIC/JAVASCRIPT AND MAKE SIGNUP POST ROUTE
+
+block content 
+    main.p-5 
+        header 
+            h1=title
+
+    .container.mt-1.bg-body-tertiary.rounded.p-5.mb-5
+        if errors
+            #providedError.alert.alert-danger.text-center.mb-5 Errors present, check bottom of form for details  
+            //- p.text-center.text-danger.mb-4 Errors present, check bottom of form for details 
+        form#myForm(method="POST" action="")
+            .mb-3.container(style="max-width: 500px") 
+                label.form-label(for="firstName") First Name 
+                input.form-control(type="text" name="firstName" value=(user === undefined) ? "" : user.firstName) 
+            .mb-3.container(style="max-width: 500px")
+                label.form-label(for="lastName") Last Name 
+                input.form-control(type="text" name="lastName" value=(user === undefined) ? "" : user.lastName)
+            .mb-3.container(style="max-width: 500px")
+                label.form-label(for="email") Email
+                input.form-control(type="email" name="email" aria-describedby="emailHelp" value=(user === undefined) ? "" : user.email)
+                .form-text#emailHelp 
+                    | We'll never share your email with anyone else.
+            .mb-3.container(style="max-width: 500px")
+                label.form-label(for="username") Username
+                input.form-control(type="text" name="username" id="username" aria-describedby="checkUsername" value=(user === undefined) ? "" : user.username)
+                .form-text#checkUsername 
+                    
+            .mb-3.container(style="max-width: 500px")
+                label.form-label(for="password") Password 
+                input.form-control(type="password" name="password" id="password")
+            .mb-3.container(style="max-width: 500px")
+                label.form-label(for="confirmPassword") Confirm Password 
+                input.form-control(type="password" name="confirmPassword" id="confirmPassword")
+            .mb-3.container(style="max-width: 500px")
+                input.form-check-input(type="checkbox" id="seePassword")
+                label.form-check-label.ms-2(for="seePassword") Show Passwords
+            .mb-3.mt-5.container.d-flex.justify-content-around(style="max-width: 500px")
+                button.btn.btn-primary(type="submit") Submit
+                button#admin.btn.btn-warning.text-white(type="submit") Admin
+
+            input(type="hidden", name="admin", id="adminInput", value=(user === undefined) ? "false" : user.admin) 
+
+        if errors
+            .mt-4.container.d-flex.justify-content-center(style="max-width: 500px")
+                ul.container-fluid
+                    each err in errors 
+                        li.w-100.text-danger=err.msg
+    
+    script(type="module" src="/javascript/pages/signUp.js")
+
+
+        
+
