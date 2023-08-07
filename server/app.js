@@ -1,3 +1,6 @@
+// TODO Profile CRUD, Customize Error Page
+
+
 const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
@@ -14,7 +17,7 @@ const indexRouter = require("./routes/indexRouter");
 const messagesRouter = require("./routes/messagesRouter");
 const authRouter = require("./routes/authRouter");
 // auth
-const {passport, ensureAuthenticated, currentUser} = require("./middleware/authMiddleware");
+const {passport, currentUser} = require("./middleware/authMiddleware");
 // DB
 const mongoose = require('mongoose');
 

@@ -16,6 +16,29 @@ body {
   height: 200px;
 }
 
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.card-header p {
+  padding: 10px;
+  margin-block-start: 0px;
+  margin-block-end: 0px;
+}
+.card-header p span {
+  color: #198754;
+  font-weight: 600;
+}
+.card-body .title {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+hr {
+  margin: 0;
+}
+
 @keyframes fadeIn {
   from {
     opacity: 0;

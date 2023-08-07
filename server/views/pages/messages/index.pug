@@ -1,0 +1,35 @@
+extends ../../layout
+
+block content
+  main.p-5
+    header.d-flex.justify-content-between.align-items-center  
+      h1= title 
+      if currentUser 
+        button#createMessage.btn.btn-primary Create Message 
+      else 
+        button#login.btn.btn-primary Login       
+
+
+    .messages.container.mt-5(style="max-width: 900px")
+      if messages.length > 0
+        each message in messages
+          .message.card.mb-3
+            if currentUser 
+              .card-header
+                p Author: 
+                  span #{message.author.username}
+                p Time: #{message.timestamp_format}
+            .card-body.d-flex.flex-column.gap-2
+              div.title 
+                h5.card-title #{message.title}
+                if currentUser && currentUser.admin 
+                  form(method="POST" action="/messages/deleteMessage")
+                    input(type="hidden" name="messageid" id="messageid" value=message.id)
+                    button#message-delete.btn.btn-primary(data-id=message.id) X
+              p.card-text.ms-5.pe-4 #{message.message}
+      else  
+        .alert.alert-info No messages to display at the moment
+
+  script(type="module" src="/javascript/pages/index.js")
+      
+

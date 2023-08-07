@@ -5,5 +5,5 @@ const createMessage = document.querySelector("#createMessage")
 
 
 changeWindowLocationOnPress(loginBtn, "/auth/login")
-changeWindowLocationOnPress(createMessage, "/createMessage")
+changeWindowLocationOnPress(createMessage, "/messages/createMessage")
 

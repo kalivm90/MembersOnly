@@ -19,7 +19,7 @@ exports.index = (req, res) => {
 exports.signup_get = asyncHandler(async (req, res, next) => {
     const adminPassword = process.env.ADMIN_SECRET_WORD
     
-    res.render("auth/signUp", {
+    res.render("pages/auth/signUp", {
         title: "Sign Up",
         adminPassword: adminPassword,
     })
@@ -82,7 +82,7 @@ exports.signup_post = [
         if (!errors.isEmpty()) {
             const adminPassword = process.env.ADMIN_SECRET_WORD
 
-            res.render("auth/signUp", {
+            res.render("pages/auth/signUp", {
                 title: "Sign Up",
                 user: newuser,
                 adminPassword: adminPassword,
@@ -120,7 +120,7 @@ exports.checkusername = asyncHandler(async (req, res, next) => {
 
 // login
 exports.login_get = asyncHandler(async (req, res, next) => {
-    res.render("auth/login", {
+    res.render("pages/auth/login", {
         title: "Login"
     })
 })

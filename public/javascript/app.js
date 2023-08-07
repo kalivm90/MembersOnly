@@ -103,6 +103,7 @@ const handleRedirectError = () => {
 
 const handleProvidedError = () => {
     const providedError = document.querySelector("#providedError");
+    console.log(providedError)
     if (providedError !== null) animateBanner(providedError);
 }
 

@@ -1,4 +1,4 @@
-extends ../layout 
+extends ../../layout 
 
 //- PUT JS IN /PUBLIC/JAVASCRIPT AND MAKE SIGNUP POST ROUTE
 
@@ -10,7 +10,6 @@ block content
     .container.mt-1.bg-body-tertiary.rounded.p-5.mb-5
         if errors
             #providedError.alert.alert-danger.text-center.mb-5 Errors present, check bottom of form for details  
-            //- p.text-center.text-danger.mb-4 Errors present, check bottom of form for details 
         form#myForm(method="POST" action="")
             .mb-3.container(style="max-width: 500px") 
                 label.form-label(for="firstName") First Name 

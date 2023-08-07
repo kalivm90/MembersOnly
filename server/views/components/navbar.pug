@@ -17,11 +17,24 @@ nav.navbar.navbar-expand-lg.bg-body-tertiary.shadow-sm
         else 
           li.nav-item
             a.nav-link(aria-current='page', href='/auth/logout') Logout
-          li.nav-item
-            a.nav-link.disabled(aria-disabled='true') Disabled
+
+        //- dropdown
+        li.nav-item.dropdown
+          a.nav-link.dropdown-toggle(href='#', role='button', data-bs-toggle='dropdown', aria-expanded='false') Profile
+          ul.dropdown-menu
+            li
+              a.dropdown-item(href='#') Update Profile 
+            li
+              a.dropdown-item(href='#') Delete Profile 
+            li
+              hr.dropdown-divider
+            li
+              a.dropdown-item(href='#') Something else here
+
+
       //- search bar
       form.d-flex(role='search')
-        input.form-control.me-2(type='search', placeholder='Search', aria-label='Search')
+        input.form-control.me-2(type='search', placeholder='Search User', aria-label='Search')
         button.btn.btn-outline-success(type='submit') Search
 
 
@@ -41,7 +54,8 @@ script.
 
 
 
-
+          //- li.nav-item
+          //-   a.nav-link.disabled(aria-disabled='true') Disabled
 
           //- //- dropdown
           //- li.nav-item.dropdown
