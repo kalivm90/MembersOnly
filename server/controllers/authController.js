@@ -118,17 +118,26 @@ exports.checkusername = asyncHandler(async (req, res, next) => {
     }
 })
 
-// login
+// LOGIN
 exports.login_get = asyncHandler(async (req, res, next) => {
     res.render("pages/auth/login", {
         title: "Login"
     })
 })
+// handles both login for local and google 
 exports.login_post = passport.authenticate("local", {
     successRedirect: "/",
     failureRedirect: "/auth/login?error=login",
-    successFlash: "Welcome!",
-    failureFlash: "Login failed."
+})
+
+
+// GOOGLE AUTH 
+// asks google for oAuth
+exports.google_request = passport.authenticate("google", {scope: ["profile", "email"]})
+// response sent back from google either approving or denying request either gets routed to home with success or /login with error
+exports.google_callback = passport.authenticate("google", {
+    successRedirect: "/",
+    failureRedirect: "/login?error=googlelogin",
 })
 
 
@@ -141,3 +150,5 @@ exports.logout = (req, res, next) => {
         res.redirect("/");
     })
 }
+
+

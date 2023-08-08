@@ -4,22 +4,22 @@ const { body, validationResult } = require("express-validator");
 const Message = require("../models/message")
 const User = require("../models/user");
 
-exports.index = asyncHandler(async (req, res, next) => {
+exports.message_detail = asyncHandler(async (req, res, next) => {
     const messages = await Message.find().populate("author", "username admin timestamp").exec();
 
-    res.render("pages/messages/index", {
+    res.render("pages/messages/message_detail", {
         title: "Messages",
         messages: messages,
     })
 })
 
 
-exports.createMessage_get = asyncHandler(async (req, res, next) => {
-    res.render("pages/messages/createMessage", {
+exports.create_get = asyncHandler(async (req, res, next) => {
+    res.render("pages/messages/message_create", {
         title: "Create Message", 
     })
 })
-exports.createMessage_post = [
+exports.create_post = [
     body("title")
         .trim()
         .bail()
@@ -43,7 +43,7 @@ exports.createMessage_post = [
         const errors = validationResult(req) 
 
         if (!errors.isEmpty()) {
-            res.render("pages/messages/createMessage", {
+            res.render("pages/messages/message_create", {
                 title: "Create Message", 
                 errors: errors.array(),
             })
@@ -63,7 +63,7 @@ exports.createMessage_post = [
 ]
 
 
-exports.deleteMessage_post = asyncHandler(async (req, res, next) => {
+exports.delete_post = asyncHandler(async (req, res, next) => {
     const message = await Message.findById(req.body.messageid).exec();
 
     if (message === null) {

@@ -16,6 +16,8 @@ const crypto = require("crypto")
 const indexRouter = require("./routes/indexRouter");
 const messagesRouter = require("./routes/messagesRouter");
 const authRouter = require("./routes/authRouter");
+const profileRouter = require("./routes/profileRouter");
+
 // auth
 const {passport, currentUser} = require("./middleware/authMiddleware");
 // DB
@@ -76,6 +78,7 @@ app.use('/js', express.static(path.join(__dirname, '../public/node_modules/boots
 app.use("/", indexRouter);
 app.use("/messages", messagesRouter);
 app.use("/auth", authRouter);
+app.use("/profile", profileRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

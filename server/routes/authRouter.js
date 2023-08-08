@@ -2,6 +2,7 @@ const express = require("express")
 const router = express.Router();
 
 const authController = require("../controllers/authController");
+const passport = require("passport");
 
 
 // index redirect 
@@ -21,6 +22,11 @@ router.post("/checkUsername", authController.checkusername);
 // logout
 router.get("/logout", authController.logout)
 
+// google 
+// send request to google for oAuth
+router.get("/google", authController.google_request);
+// handles the response from google after oAuth is completed or denied
+router.get("/google/callback", authController.google_callback);
 
 
 module.exports = router 

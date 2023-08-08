@@ -26,6 +26,10 @@ block content
                 label.form-check-label.ms-2(for="seePassword") Show Passwords
             .mb-3.mt-5.container.d-flex.justify-content-around(style="max-width: 500px")
                 button.btn.btn-primary(type="submit") Submit
+                button#googleAuth.btn.btn-success(type="submit") 
+                    img#google(src="/images/google.png", alt="google logo") 
+                    | With Google 
+            
 
             input(type="hidden", name="admin", id="adminInput", value=(user === undefined) ? "false" : user.admin) 
 
