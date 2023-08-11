@@ -11,10 +11,11 @@ block content
         form#myForm.mt-4(method="POST" action="")
             .mb-3.container(style="max-width: 500px")
                 label.form-label(for="title") Title: 
-                input.form-control(type="text" name="title" id="title" aria-describedby="checkUsername")
+                input.form-control(type="text" name="title" id="title" aria-describedby="checkUsername" value=(message === undefined) ? "" : message.title)
             .mb-3.container(style="max-width: 500px")
-                label.form-label(for="password") Message:
-                textarea.form-control(name="message" id="message" cols="50" rows="10") 
+                label.form-label(for="message") Message:
+                textarea.form-control(name="message" id="message" cols="50" rows="10")
+                    | #{(message === undefined) ? "" : message.message}
             .mb-3.container(style="max-width: 500px")
                 label.form-label(for="author") Author: 
                 input.form-control(type="text" id="author" disabled value=currentUser.username)

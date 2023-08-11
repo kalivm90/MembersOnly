@@ -3,7 +3,20 @@ extends ../../layout
 block content 
     main.p-5 
         header 
-            h1=title
+            h2 #{title}: #{user.username}
 
-    .container.mt-1.bg-body-tertiary.rounded.p-5.mb-5
-        p #{currentUser}
+    .container.mt-1.bg-body-tertiary.rounded.p-5.mb-5.d-flex.flex-column.gap-4 
+        div 
+            h3 Are you sure you want to do this?
+            p.text-secondary All of your messages will be deleted if you proceed.
+
+        div 
+            p Please be aware that this action is irreversible and any messages associated with your account will be permanently lost.
+            p Current messages: 
+                span.text-danger #{messages.length}
+            hr 
+
+        form(method="POST" action="") 
+            div.form-group 
+                input(type="hidden" name="userid" id="userid" value=user._id)
+                button.btn.btn-warning Delete 

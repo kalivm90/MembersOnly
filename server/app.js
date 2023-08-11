@@ -1,4 +1,4 @@
-// TODO Profile CRUD, Customize Error Page
+// Customize Error Page
 
 
 const createError = require('http-errors');

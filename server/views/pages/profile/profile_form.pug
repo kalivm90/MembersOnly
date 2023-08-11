@@ -1,9 +1,39 @@
-extends ../../layout 
+extends ../../layout
 
-block content 
-    main.p-5 
-        header 
-            h1=title
+block content
+    main.p-5
+        header.d-flex.justify-content-between.align-items-center  
+            h2 #{title}: #{user.username} 
+    
+    .container.mt-1.bg-body-tertiary.rounded.p-3.mb-5
+        if errors
+            #providedError.alert.alert-danger.text-center.mb-5 Errors present, check bottom of form for details
+        form#myForm.mt-4(method="POST" action="")
+            .mb-3.container(style="max-width: 500px")
+                label.form-label(for="firstName") First Name: 
+                input.form-control(type="text" name="firstName" id="firstName" aria-describedby="first name" value=(user === undefined) ? "" : user.firstName)
+            .mb-3.container(style="max-width: 500px")
+                label.form-label(for="lastName") Last Name:
+                input.form-control(type="text" name="lastName" id="lastName" aria-describedby="last name" value=(user === undefined) ? "" : user.lastName)
+            .mb-3.container(style="max-width: 500px")
+                label.form-label(for="username") Username:
+                input.form-control(type="text" name="username" id="username" aria-describedby="username" value=(user === undefined) ? "" : user.username)
+                .form-text#checkUsername 
+            .mb-3.container(style="max-width: 500px")
+                label.form-label(for="email") Email: 
+                input.form-control(type="email" id="email" name="email" value=(user === undefined) ? "" : user.email)
+            .mb-3.mt-5.container.d-flex.justify-content-around(style="max-width: 500px")
+                button.btn.btn-primary(type="submit") Submit
+                button#admin.btn.btn-warning.text-white(type="submit") Admin
 
-    .container.mt-1.bg-body-tertiary.rounded.p-5.mb-5
-        p #{currentUser}
+            input(type="hidden", name="admin", id="adminInput", value=(user === undefined) ? "false" : user.admin) 
+
+    
+        if errors
+            .mt-4.container.d-flex.justify-content-center(style="max-width: 500px")
+                ul.container-fluid
+                    each err in errors 
+                        li.w-100.text-danger=err.msg
+
+
+    script(type="module" src="/javascript/pages/updateUser.js")

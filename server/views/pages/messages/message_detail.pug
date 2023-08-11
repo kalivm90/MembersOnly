@@ -17,7 +17,7 @@ block content
             if currentUser 
               .card-header
                 p Author: 
-                  span #{message.author.username}
+                  a(href=`/profile/${message.author.id}`) #{message.author.username}
                 p Time: #{message.timestamp_format}
             .card-body.d-flex.flex-column.gap-2
               div.title 
@@ -25,11 +25,11 @@ block content
                 if currentUser && currentUser.admin 
                   form(method="POST" action="/messages/deleteMessage")
                     input(type="hidden" name="messageid" id="messageid" value=message.id)
-                    button#message-delete.btn.btn-primary(data-id=message.id) X
+                    button.btn.btn-danger X
               p.card-text.ms-5.pe-4 #{message.message}
       else  
         .alert.alert-info No messages to display at the moment
 
-  script(type="module" src="/javascript/pages/index.js")
+  script(type="module" src="/javascript/pages/message_detail.js")
       
 

@@ -12,19 +12,21 @@ nav.navbar.navbar-expand-lg.bg-body-tertiary.shadow-sm
         if !currentUser 
           li.nav-item 
             a.nav-link(href="/auth/login") Login 
-          li.nav-item 
+          li.nav-item.mb-3.mb-lg-0
             a.nav-link(href="/auth/signUp") Sign Up
         else 
-          li.nav-item
-            a.nav-link(aria-current='page', href='/auth/logout') Logout
           //- dropdown
-          li.nav-item.dropdown
+          li.nav-item.dropdown.mb-3.mb-lg-0
             a.nav-link.dropdown-toggle(href='#', role='button', data-bs-toggle='dropdown', aria-expanded='false') Profile
             ul.dropdown-menu
               li 
-                a.dropdown-item(href="/profile") My Profile
+                a.dropdown-item(href=currentUser.url) My Profile
               li
                 a.dropdown-item(href=currentUser.url + "/update") Update Profile 
+              li 
+                hr.dropdown-divider
+              li.nav-item
+                a.dropdown-item(aria-current='page', href='/auth/logout') Logout
               li
                 hr.dropdown-divider
               li
@@ -32,8 +34,8 @@ nav.navbar.navbar-expand-lg.bg-body-tertiary.shadow-sm
 
 
       //- search bar
-      form.d-flex(role='search')
-        input.form-control.me-2(type='search', placeholder='Search User', aria-label='Search')
+      form.d-flex(role='search', method="GET", action="/profile/search")
+        input.form-control.me-2(type='search', placeholder='Search User', name="q" aria-label='Search')
         button.btn.btn-outline-success(type='submit') Search
 
 script(type="module" src="/javascript/components/navbar.js")

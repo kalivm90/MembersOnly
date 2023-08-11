@@ -1,0 +1,88 @@
+extends ../../layout 
+
+block content 
+    main.p-2 
+        header.text-center 
+            h2.mb-0.mt-5 User: #{user.username}
+
+    .container-fluid
+        .row
+            .col-md-8.offset-md-2.mt-0
+                .card.mt-5
+                    .card-body.d-flex.flex-column.gap-4    
+                        .profile-head.d-flex.justify-content-between.align-items-center                     
+                            h2.profile Profile Information
+                            if currentUser != undefined && currentUser.id == user.id 
+                                .d-flex.gap-5
+                                    a(href=`/profile/${currentUser.id}/update` class="btn btn-primary") Update
+                                    a(href=`/profile/${currentUser.id}/delete` class="btn btn-danger") Delete
+                        hr
+                        .px-4.d-flex.flex-column.gap-1.mb-2 
+                            p.card-text
+                                strong First Name:
+                                |  #{user.firstName}
+                            p.card-text 
+                                strong Last Name: 
+                                |  #{user.lastName}
+                            p.card-text
+                                strong Email:
+                                |  #{user.email}
+                            p.card-text
+                                strong Username:
+                                |  #{user.username}
+                            p.card-text
+                                strong Admin: 
+                                    span(class=(user.admin) ? "text-primary" : "text-danger") #{user.admin}
+
+        if currentUser != undefined
+            .row.mb-5
+                .col-md-8.offset-md-2
+                    .card.mt-5
+                        .card-body.d-flex.flex-column.gap-4
+                            if currentUser != undefined && currentUser.id == user.id
+                                div
+                                    .d-flex.justify-content-between.align-items-center 
+                                        h2.profile Messages 
+                                        button.btn.btn-warning Create Message
+                                    hr.mt-3 
+                            else 
+                                h2.profile Messages
+                                hr
+
+                            if messages.length < 1
+                                p.text-warning.ps-3 No messages at this time
+                            else
+                                each m in messages
+                                    .message-card.card.p-3.mb-3
+                                        .d-flex.justify-content-between.align-items-center.px-3
+                                            h5.card-title Title: #{m.title}
+                                            span.text-muted #{m.timestamp_format}
+                                        hr
+                                        .card-text.p-4.mt-2.bg-light.rounded #{m.message}
+                                        
+                                        if currentUser != undefined && currentUser.id == user.id
+                                            div.d-flex.gap-lg-4.mt-3.justify-content-end 
+                                                a.btn.btn-primary(href=`/messages/${m._id}/update`) Update
+                                                form(method="POST" action="/messages/deleteMessage")
+                                                    input(type="hidden" name="messageid" id="messageid" value=m._id)
+                                                    button.btn.btn-danger Delete 
+        else
+            .row.mb-5
+                .col-md-8.offset-md-2
+                    .card.mt-5
+                        .card-body 
+                            p.mb-0.p-3 You must be 
+                                a(href="/auth/login").link-warning logged in
+                                |  to view messages 
+
+
+    script.
+        console.log("#{messages}");
+
+        
+
+
+
+
+
+//- p #{currentUser}
