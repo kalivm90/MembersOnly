@@ -7,9 +7,16 @@ const User = require("../models/user");
 
 // profile_
 exports.profile_detail = asyncHandler(async (req, res, next) => {
-    const messages = await Message.find({author: req.params.id}).populate("author").exec(); 
-    const user = await User.findById(req.params.id).exec();
+    const [messages, user] = await Promise.all([
+        Message.find({author: req.params.id}).populate("author").exec(),
+        User.findById(req.params.id).exec(),
+    ])
 
+    if (user === null || messages === null) {
+        const error = new Error("That user does not exist.")
+        error.status = 404 
+        next(error)
+    }
 
     res.render("pages/profile/profile_detail", {
         title: "User Profile",
@@ -21,8 +28,6 @@ exports.profile_detail = asyncHandler(async (req, res, next) => {
 // update get
 exports.profile_update_get = asyncHandler(async (req, res, next) => {
     const user = await User.findById(req.params.id).exec(); 
-
-    console.log(user.id, res.locals.currentUser.id)
 
     if (user.id != res.locals.currentUser.id) {
         const error = new Error("You cannot edit a strangers profile but I commend you for trying.")
@@ -163,7 +168,6 @@ exports.search_get = asyncHandler(async (req, res, next) => {
         .select("username firstname url")
         .exec(); 
 
-    console.log("USER:", user, "Q", req.query.q, "URL", user[0].url)
     res.redirect(user[0].url)
     // res.json({users: user}); 
 })

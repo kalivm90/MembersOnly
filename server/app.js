@@ -1,6 +1,3 @@
-// Customize Error Page
-
-
 const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
@@ -9,8 +6,16 @@ const logger = require('morgan');
 require("dotenv").config();
 // session imports
 const session = require("express-session");
-const flash = require("connect-flash");
+const MongoStore = require("connect-mongo");
+// if you wanted to store sessions on client side 
+// const session = require("cookie-session");
 const crypto = require("crypto")
+// compress headers 
+const compression = require("compression");
+// protect aganist well known attacks
+const helmet = require("helmet");
+// rate limiter
+const RateLimit = require("express-rate-limit");
 
 // routers 
 const indexRouter = require("./routes/indexRouter");
@@ -31,25 +36,41 @@ app.set("view engine", "pug");
 
 // session
 const secretKey = crypto.randomBytes(32).toString('hex');
-app.use(
-  session(
-    {
+
+// if in production session is encrypted and stored in the database with an expiration of 14 days. 
+if (app.get("env") === "production") {
+  app.use(session({
+    secret: secretKey, 
+    resave: false, 
+    saveUninitialized: false, 
+    store: MongoStore.create({
+      mongoUrl: process.env.MONGODB_URI,
+      // default time until expiration 
+      // ttl: 14 * 24 * 60 * 60,
+      crypto: {
+        secret: secretKey
+      }
+    }),
+  }))
+} else {
+  app.use(
+    session({
       secret: secretKey,
-      resave: false, 
-      saveUninitialized: true
-    }
+      resave: true, 
+      saveUninitialized: true, 
+    })
   )
-);
+}
 
-app.use(
-  session({
-    secret: secretKey,
-    resave: false,
-    saveUninitialized: true,
-  })
-);
+// rate limit NOT USING RATE LIMITER FOR THIS APP SINCE I AM NOT USING A BUNDLER
+// TO USE RATE LIMIT FOR A SPECIFIC ROUTE
+// app.get("/protected-route", limiter, (req, res, next) => {});
 
-app.use(flash());
+// const limiter = RateLimit({
+//   windowMs: 1 * 60 * 1000, // 1 minute
+//   max: 100,
+// });
+
 
 // Passport middleware
 app.use(passport.initialize());
@@ -60,6 +81,10 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(compression()); // Compress all routes
+app.use(helmet()); // protect against attacks 
+// app.use(limiter); // Apply rate limiter to all requests
+
 
 // static build files
 app.use(express.static(path.join(__dirname, '../public')));
@@ -85,15 +110,19 @@ app.use(function(req, res, next) {
   next(createError(404));
 });
 
+
 // error handler
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+  // res.locals.error = req.app.get('env') === 'development' ? err : {};
+  res.locals.error = err 
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  res.render('error', {
+    mode: req.app.get("env") 
+  });
 });
 
 // DB 

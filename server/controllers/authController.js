@@ -113,7 +113,6 @@ exports.checkusername = asyncHandler(async (req, res, next) => {
         const existingUser = await User.findOne({username: bodyUsername.value}).exec();
         res.json({available: !existingUser})
     } catch (err) {
-        console.log(err)
         res.status(500).json({usernameError: "Cant seem to search for this one"})
     }
 })
