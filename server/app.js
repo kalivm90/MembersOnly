@@ -1,3 +1,5 @@
+// DO NOT FORGET TO WHITELIST RENDERS IP ADDRESS OR YOU WILL NOT BE ABLE TO CONNECT TO THE DB!
+
 const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
