@@ -18,9 +18,13 @@ const animateBanner = (elem, parent=null) => {
     }, 4000);
 }
 
-const changeWindowLocationOnPress = (elem, path) => {
+const changeWindowLocationOnPress = (elem, path, preventDefault=false) => {
     if (elem !== null) {
-        elem.addEventListener("click", () => {
+        elem.addEventListener("click", (e) => {
+            if (preventDefault) {
+                e.preventDefault();
+            } 
+
             window.location.href = path
         })
     } 

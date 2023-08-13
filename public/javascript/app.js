@@ -96,6 +96,8 @@ const handleRedirectError = () => {
             alert.innerHTML = "Incorrect username or password."
         } else if (param === "autologin") {
             alert.innerHTML = "Error on autologin after signup, please login."
+        } else if (param === "googlelogin") {
+            alert.innerHTML = "Error with Google Auth, please try again."
         }
         animateBanner(alert, errorBanner);
     }
@@ -103,7 +105,6 @@ const handleRedirectError = () => {
 
 const handleProvidedError = () => {
     const providedError = document.querySelector("#providedError");
-    console.log(providedError)
     if (providedError !== null) animateBanner(providedError);
 }
 
